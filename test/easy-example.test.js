@@ -40,4 +40,16 @@ describe("Suite tests to an easy example of mocking", () => {
         expect(mockCalledBack3.mock.results[1].value).toBe("Eh")
         expect(mockCalledBack3.mock.results[2].value).toBe("Za")
     });
+
+    test("4. Test last call argument", () => {
+        const mockingBird = jest.fn((list, element) => list.indexOf(element));
+
+        mockingBird(["Breakdown", "Dust Coda", "Thor"], "Thor");
+        mockingBird([1, 100, 1000], 23);
+        mockingBird(['k', 'q', 'e'], "e");
+
+        expect(mockingBird.mock.lastCall).toEqual(expect.arrayContaining([['k', 'q', 'e'], "e"]))
+        expect(mockingBird.mock.lastCall[0]).toEqual(expect.arrayContaining(['k', 'q', 'e']));
+        expect(mockingBird.mock.lastCall[1]).toBe("e");
+    })
 });
