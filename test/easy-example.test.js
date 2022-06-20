@@ -1,3 +1,6 @@
+const axios = require('axios');
+const easy = require('../easy-example')
+
 describe("Suite tests to an easy example of mocking", () => {
     
     it("1. Verifying if created mock name is mockCalledBack", () => {
@@ -23,7 +26,7 @@ describe("Suite tests to an easy example of mocking", () => {
                 [...args] <- última llamada
             ]
         */
-        expect(mockCalledBack2.mock.calls.length).toBe(1);
+        expect(mockCalledBack2.mock.calls.length).toBe(3);
     })
 
     it("3. Verifying if the values returned are the correct", () => {
@@ -76,5 +79,23 @@ describe("Suite tests to an easy example of mocking", () => {
             acc += index.value;
             return acc;
         }, 0)).toBe("263PARANGARICUTIRIMICUARO");
+    })
+
+    it("6. Mocking axios", async () => {
+        const spy = jest.spyOn(axios, "get").mockReturnValueOnce({
+            data: {
+                "userId": 1,
+                "id": 1,
+                "title": "delectus aut autem",
+                "completed": false
+            }
+        });
+
+        
+        const result = await easy.callingAPI("https://jsonplaceholder.typicode.com/todos/1")
+        
+        expect(spy.mock.calls[0][0]).toBe('https://jsonplaceholder.typicode.com/todos/1')
+        expect(result.userId).toBe(1);
+
     })
 });
