@@ -52,4 +52,29 @@ describe("Suite tests to an easy example of mocking", () => {
         expect(mockingBird.mock.lastCall[0]).toEqual(expect.arrayContaining(['k', 'q', 'e']));
         expect(mockingBird.mock.lastCall[1]).toBe("e");
     })
+
+    test("5. Playing with mockImplementation()", () => {
+        const mockFn = jest.fn(scalar => 42 + scalar);
+
+        mockFn(0); // 42
+        mockFn(1); // 43
+        mockFn(25)
+
+        mockFn.mockImplementation(scalar => 36 + scalar);
+
+        mockFn(2); // 38
+        mockFn(3); // 39
+        mockFn(-2)
+
+        mockFn.mockImplementation( a => a.toUpperCase())
+        mockFn("Parangaricutirimicuaro")
+
+        console.log(mockFn.mock.calls)
+        console.log(mockFn.mock.results)
+
+        expect(mockFn.mock.results.reduce((acc, index) => {
+            acc += index.value;
+            return acc;
+        }, 0)).toBe("263PARANGARICUTIRIMICUARO");
+    })
 });
