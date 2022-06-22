@@ -14,7 +14,7 @@ describe("Suite tests to an easy example of mocking", () => {
         mockCalledBack2(3,4,9);
         mockCalledBack2();
 
-        console.log(mockCalledBack2.mock.results);
+        //console.log(mockCalledBack2.mock.results);
 
         /*
             Arreglo con llamadas al mock, la cual lucirá así:
@@ -72,8 +72,8 @@ describe("Suite tests to an easy example of mocking", () => {
         mockFn.mockImplementation( a => a.toUpperCase())
         mockFn("Parangaricutirimicuaro")
 
-        console.log(mockFn.mock.calls)
-        console.log(mockFn.mock.results)
+        /*console.log(mockFn.mock.calls)
+        console.log(mockFn.mock.results)*/
 
         expect(mockFn.mock.results.reduce((acc, index) => {
             acc += index.value;
@@ -97,5 +97,18 @@ describe("Suite tests to an easy example of mocking", () => {
         expect(spy.mock.calls[0][0]).toBe('https://jsonplaceholder.typicode.com/todos/1')
         expect(result.userId).toBe(1);
 
+        console.log(spy.getMockName());
+        spy.mockClear();
+        console.log(spy.getMockName());
+        //console.log(spy.mock.calls[0][0]);
+
     })
+
+    it("7. Mock implementation()", () => {
+        //jest.mock("axios");
+        const axi = require('axios')
+        console.log(axi)
+    })
+
+    //afterEach(jest.clearAllMocks)
 });
